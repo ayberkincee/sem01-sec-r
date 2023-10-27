@@ -46,10 +46,13 @@ BOD %>%
 View(CO2)
 
 CO2 %>%
-  #ggplot(aes(conc, uptake, color=Treatment))+
-  ggplot(aes(conc, uptake, color=Plant))+
+  ggplot(aes(conc, uptake, color=Treatment))+
+  #ggplot(aes(conc, uptake, color=Plant))+
   geom_point()+
-  geom_smooth(method=lm, se=F)
+  geom_smooth(method=lm, se=F)+
+  facet_wrap(~Type)+ # Prefereably use factor columns
+  labs(title="Conc of CO2")+
+  theme_dark()
 
 # lm: linear model
 # se: standard error
