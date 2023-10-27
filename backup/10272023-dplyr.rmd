@@ -131,3 +131,17 @@ hflights %>% select(UniqueCarrier, DepDelay) %>% filter(DepDelay > 60)
 hflights %>% select(UniqueCarrier, DepDelay) %>% filter(DepDelay > 60) %>% dim()
 ```
 
+## Arranging
+
+### `arrange`: To reorder the rows
+**Syntax**: `arrange`(`data`, `parameter`)
+
+```{r}
+#1 Select  UniqueCarrier and DepDelay columns and sort by DepDelay
+select(hflights, UniqueCarrier, DepDelay)
+arrange(select(hflights, UniqueCarrier, DepDelay), DepDelay)
+## Chaining Counterpart
+hflights %>% select(UniqueCarrier, DepDelay) %>% arrange(DepDelay)
+## Descending
+hflights %>% select(UniqueCarrier, DepDelay) %>% arrange(desc(DepDelay))
+```
