@@ -1,0 +1,56 @@
+---
+title: "ggplot Package"
+author: "23BMAT019"
+date: "2023-10-27"
+output: 
+  html_document: 
+    toc: yes
+    highlight: kate
+    theme: spacelab
+---
+
+```{r}
+library("dplyr")
+library("ggplot2")
+```
+
+Key Points:
+
+- data
+- mapping (aesthetics [x v/s y])
+- geometric interpretation
+- statistics
+- facet
+- co-ordinate space
+- label
+- theme
+
+`+` is used to join the commands
+
+# Scatter Plot and Regression
+
+## Example (BOD: Biochemical Oxygen Demand)
+```{r}
+View(BOD)
+
+#ggplot(BOD, aes(Time, demand))
+BOD %>%
+  ggplot(aes(Time, demand))+
+  geom_line(size=2, color="maroon")+
+  geom_point(size=4, color="darkblue")+
+  theme_classic()
+```
+
+## Example (CO2)
+```{r}
+View(CO2)
+
+CO2 %>%
+  #ggplot(aes(conc, uptake, color=Treatment))+
+  ggplot(aes(conc, uptake, color=Plant))+
+  geom_point()+
+  geom_smooth(method=lm, se=F)
+
+# lm: linear model
+# se: standard error
+```
