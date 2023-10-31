@@ -188,7 +188,7 @@ str(hflights)
 
 ```{r}
 head(hflights)
-## (Grouping related to one column, and one-item summary)
+## (Grouping related to one column)
 #1 Create a table grouped by `UniqueCarrier`, and then
 #  summarise each group by taking the mean of `ArrDelay`
 
@@ -205,5 +205,19 @@ hflights %>% group_by(UniqueCarrier) %>% summarise(mean(ArrDelay, na.rm=T))
 hflights %>% group_by(UniqueCarrier) %>% summarise_each(funs(mean(., na.rm=T)), Cancelled, Diverted, na.rm=T)
 # `.` in mean(., na.rm=T) represents an arbitrary data
 # So, mean(., na.rm=T) calculates the mean of non-NA data
-```
 
+## ()
+#3 For each destination, calculate the minimum
+# and maximum rrival and departure delays
+
+hflights %>% group_by(Dest) %>% summarise_each(funs(max(., na.rm=T), min(., na.rm=T)), ArrDelay, DepDelay)
+
+## ()
+#4 For each day of the year, count the total number
+# of flights and sort in descending order
+
+# SYNTAX: `n`() # to count the number of rows in a group
+# SYNTAX: `n_distinct`(`vector`) # to count the number of unique items in a vector
+
+hflights %>% group_by(Month, DayofMonth) %>% summarise(flight_count=n()) %>% arrange(desc(flight_count))
+```
