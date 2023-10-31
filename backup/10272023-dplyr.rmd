@@ -10,7 +10,8 @@ output:
 ---
 # Adding `dplyr`
 ```{r}
-#library("dplyr")
+library(dplyr)
+library(ggplot2)
 library(hflights)
 ```
 
@@ -42,6 +43,7 @@ Five Basic verbs: `filter`, `select`, `arrange`, `mutate`, and `summarise`
 ### `filter`: keep rows satisfying a specific condition
 **Syntax**: `filter`(`data`, `condition`, ...)
 
+Example 1
 ```{r}
 #1 Find the rows where Sepal.Length > 5
 filter(iris, Sepal.Length > 5) # `$` is not needed
@@ -57,6 +59,7 @@ filter(iris, Species=="setosa" |  Species=="versicolor")
 filter(iris, Species %in% c("setosa", "versicolor")) # Alternative
 ```
 
+Example 2
 ```{r}
 View(hflights)
 
@@ -88,6 +91,7 @@ hflights[hflights$UniqueCarrier %in% c("AA", "UA"), ]
 ### `select`: pick column by name
 **Syntax**: `select`(`data`, `col1`, `col2`, ...)
 
+Example 1
 ```{r}
 #1 Extract the data for Sepal.Length and Petal.Length
 select(iris, Sepal.Length, Petal.Length)
@@ -120,6 +124,7 @@ select(hflights, DayofMonth:FlightNum)
 select(hflight, Year:ArrTime, contains("Taxi"), contains("Delay"))
 ```
 
+Example 2
 ```{r}
 # CQ1. Select UniqueCarrier and DepDelay Column and filter for Departure delays over 60 minutes
 filter(select(hflights, UniqueCarrier, DepDelay), DepDelay > 60)
@@ -145,3 +150,60 @@ hflights %>% select(UniqueCarrier, DepDelay) %>% arrange(DepDelay)
 ## Descending
 hflights %>% select(UniqueCarrier, DepDelay) %>% arrange(desc(DepDelay))
 ```
+
+
+## Mutating
+
+### `mutate`: To add a new variable i.e. column to an existing data frame
+**Syntax**: `mutate`(`data`, `new_colname`=`definition`)
+
+Example 1
+```{r}
+str(iris)
+rm(iris) # to remove the data
+
+# mutate is temporary
+mutate(iris, Sepal.Mean=mean(c(Sepal.Length, Sepal.Width))) %>% head()
+
+# instead assign mutate to the dframe itself
+iris <- mutate(iris, Sepal.Mean=mean(c(Sepal.Length, Sepal.Width)))
+str(iris)
+```
+
+Example 2
+```{r}
+str(hflights)
+hflights %>% mutate(Speed=Distance/ArrTime)
+str(hflights)
+```
+
+
+## Summarising
+
+### `summarise`: To reduce the variables to values
+
+- Primarily useful for the data that has been grouped by one or more variables.
+- For grouping we use `group_by()` which creates the groups that will be operated on.
+- `summarise()` uses the provided aggregation funciton to summarise each group.
+
+```{r}
+head(hflights)
+## (Grouping related to one column, and one-item summary)
+#1 Create a table grouped by `UniqueCarrier`, and then
+#  summarise each group by taking the mean of `ArrDelay`
+
+hflights %>% group_by(UniqueCarrier) %>% summarise(mean(ArrDelay, na.rm=T))
+# there are 15 groups in total
+# na.rm=T removes na entries
+
+## (Grouping related to mulitple-columns)
+#2 For each UniqueCarrier calculate
+# the percentage of flights cancelled or diverted
+
+# SYNTAX: data %>% summarise_each(funs(fn1, fn2, ...), col1, col2, ...)
+
+hflights %>% group_by(UniqueCarrier) %>% summarise_each(funs(mean(., na.rm=T)), Cancelled, Diverted, na.rm=T)
+# `.` in mean(., na.rm=T) represents an arbitrary data
+# So, mean(., na.rm=T) calculates the mean of non-NA data
+```
+
