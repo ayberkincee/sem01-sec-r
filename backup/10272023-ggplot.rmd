@@ -50,10 +50,35 @@ CO2 %>%
   #ggplot(aes(conc, uptake, color=Plant))+
   geom_point()+
   geom_smooth(method=lm, se=F)+
-  facet_wrap(~Type)+ # Prefereably use factor columns
+  facet_wrap(~Type)+ # Preferably use factor columns
   labs(title="Conc of CO2")+
   theme_dark()
 
 # lm: linear model
 # se: standard error
 ```
+
+## Example (mpg)
+```{r}
+View(mpg)
+#1 Plot something for the data where `cty` < 20
+mpg %>% filter(cty < 20) %>%
+  ggplot(aes(displ, cty))+
+  geom_point(aes(color=drv))+
+  geom_smooth(method=lm, se=F, color="maroon")+
+  facet_wrap(~cyl)+
+  labs(x="Engine Size", y="City miles per Gallon", title="Fuel Efficiency")+
+  theme_bw()
+```
+
+## Boxplot (CO2)
+```{r}
+CO2 %>% ggplot(aes(Treatment, uptake))+
+  geom_boxplot()+
+  geom_point(aes(color=Plant, size=conc))+
+  facet_wrap(~Plant)+
+  labs(title="Boxplot")+
+  coord_flip()+
+  theme_bw()
+```
+
