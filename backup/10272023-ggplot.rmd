@@ -12,7 +12,9 @@ output:
 ```{r}
 library("dplyr")
 library("ggplot2")
+library("ggplot2movies")
 library("Hmisc")
+
 ```
 
 Key Points:
@@ -72,7 +74,9 @@ mpg %>% filter(cty < 20) %>%
   theme_bw()
 ```
 
-## Boxplot (CO2)
+# Boxplot
+
+## Example (CO2)
 ```{r}
 CO2 %>% ggplot(aes(Treatment, uptake))+
   geom_boxplot()+
@@ -83,7 +87,7 @@ CO2 %>% ggplot(aes(Treatment, uptake))+
   theme_bw()
 ```
 
-# Boxplot (chickwts)
+# Example (chickwts)
 ```{r}
 chickwts %>% ggplot(aes(x=reorder(feed, weight), y=weight, fill=feed))+
   geom_boxplot(outlier.colour = "red", alpha=1.9, outlier.shape = 3, outlier.size = 3)+# to hide the outliers, use outliers.shape=NA
@@ -102,3 +106,7 @@ chickwts %>% ggplot(aes(x=reorder(feed, weight), y=weight, fill=feed))+
 
 # to reorder with a specific condition, use reordr in aes(x=(a,b)) read as 'on x-axis reorder a according to b' (for descending use -b)
 ```
+
+# Bar plots
+
+## Example (movies)
