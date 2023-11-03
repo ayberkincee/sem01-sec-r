@@ -107,6 +107,43 @@ chickwts %>% ggplot(aes(x=reorder(feed, weight), y=weight, fill=feed))+
 # to reorder with a specific condition, use reordr in aes(x=(a,b)) read as 'on x-axis reorder a according to b' (for descending use -b)
 ```
 
+# Histogram
+
+## Example (msleep)
+```{r}
+msleep %>% ggplot(aes(x=awake))+ # y will be the frequency
+  geom_histogram(binwidth = 1, # size of each bin
+                 aes(y=..density..), # density function
+                 color="green",
+                 fill="purple")+
+  labs(x="Total Sleep", y=NULL,
+       title="Histogram",
+       subtitle="Of Total Sleep")+
+  theme_dark()
+```
+
+## Example (Plotting the density function)
+```{r}
+data = data.frame(x=rnorm(1E+5))
+data %>% ggplot(aes(x))+
+  geom_histogram(aes(y=..density..), color="green", fill="lightblue")+
+  stat_function(fun=dnorm, 
+                args=list(mean=mean(data$x),
+                          sd=sd(data$x)),
+                color="red",
+                size=3)+
+  labs(title="Histogram and Density Function")+
+  theme_bw()
+
+
+# dnorm(a) density function of normal distribution
+
+```
+
+
 # Bar plots
 
 ## Example (movies)
+```{r}
+movies %>% ggplot(aes(x=year))
+```
