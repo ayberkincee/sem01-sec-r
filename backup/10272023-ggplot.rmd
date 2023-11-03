@@ -12,6 +12,7 @@ output:
 ```{r}
 library("dplyr")
 library("ggplot2")
+library("Hmisc")
 ```
 
 Key Points:
@@ -82,3 +83,22 @@ CO2 %>% ggplot(aes(Treatment, uptake))+
   theme_bw()
 ```
 
+# Boxplot (chickwts)
+```{r}
+chickwts %>% ggplot(aes(x=reorder(feed, weight), y=weight, fill=feed))+
+  geom_boxplot(outlier.colour = "red", alpha=1.9, outlier.shape = 3, outlier.size = 3)+# to hide the outliers, use outliers.shape=NA
+  #coord_flip()+ # for horizontal boxplots, use coordinate flip
+  geom_jitter(colour="green", size=0.3)+ # to get the points, use geom_point() but those points overlap each other. geom_jitter() is used to avert overlapping
+  stat_boxplot(geom="errorbar", width=0.2)+ # to add the lines at end of each boxplot line
+  stat_summary(fun=mean, geom="point", col="maroon", size=2)+ # to add a mean in form of point in maroon of size 2
+  #stat_summary(fun.data=mean_cl_normal, geom="linerange", col="yellow")+
+  labs(title="Box Plot")+
+  labs(subtitle="with additional conditions")+
+  theme_dark()
+
+# we can fill the colour inside geom_boxplot(): geom_boxplot(fill="green")
+
+# higher the alpha in ]0,1[, lower the transparency
+
+# to reorder with a specific condition, use reordr in aes(x=(a,b)) read as 'on x-axis reorder a according to b' (for descending use -b)
+```
