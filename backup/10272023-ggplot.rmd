@@ -14,7 +14,7 @@ library("dplyr")
 library("ggplot2")
 library("ggplot2movies")
 library("Hmisc")
-
+library("tidyverse")
 ```
 
 Key Points:
@@ -143,7 +143,21 @@ data %>% ggplot(aes(x))+
 
 # Bar plots
 
-## Example (movies)
+## Single Category Bar Plot
 ```{r}
-movies %>% ggplot(aes(x=year))
+msleep %>% drop_na(vore) %>% ggplot(aes(x=vore))+
+  geom_bar(fill="darkblue", color="red")+
+  coord_flip()+
+  labs(title="Single Category Barplot",
+       subtitle="msleep")+
+  theme_bw()
+```
+
+## Two Category Bar Plot
+```{r}
+starwars %>% drop_na(hair_color) %>% drop_na(species) %>% drop_na(homeworld) %>% filter(hair_color == "black" | hair_color == "brown") %>% ggplot(aes(hair_color, color=homeworld, fill=gender))+
+  facet_wrap(~species)+
+  geom_bar(position="dodge")+ # for grouped bar plot use position="dodge"
+  labs(x="Hair Colour", y="Count",
+       title="Hair Color for Different Species")
 ```
