@@ -1,0 +1,42 @@
+---
+title: "Practice"
+author: "You"
+date: "2023-11-07"
+output: html_document
+---
+
+```{r}
+# Add packages to library
+library(readxl)
+library(openxlsx)
+```
+
+# Functions with Syntax
+
+1. `write`.`xlsx`(`dataframe`, "`filename.ext`")
+  
+  - Writes the `dataframe` to a file named `filename.ext`.
+  - A Workbook object is returned
+
+# Converting a Data Frame to Excel Workbook
+
+`read`  - **Extract** data
+`write` - **Modify**  data
+
+```{r}
+getwd()
+
+head(mtcars)
+class(mtcars)
+
+# To store a Workbook object in cars.
+cars <- write.xlsx(mtcars, "cars.xlsx")
+## The workbook object converts `mtcars` 
+## into an Excel Workbook named `cars.xlsx`
+
+cars # Workbook object
+
+my_wbook <- write.xlsx(iris, "23bmat019.xlsx")
+my_wbook
+```
+
