@@ -13,15 +13,22 @@ library(openxlsx)
 
 # Functions with Syntax
 
-1. `write`.`xlsx`(`dataframe`, "`filename.ext`")
+1. `write`.`xlsx`(`dataframe`, "`filename.xlsx`")
   
-  - Writes the `dataframe` to a file named `filename.ext`.
+  - Writes the `dataframe` to a file named `filename.xlsx`.
   - A Workbook object is returned
+  - Please note that this function is only for .xlsx files
 
-# Converting a Data Frame to Excel Workbook
+2. `read`.`xlsx`("`filename.xlsx`")
 
+  - Reads `filename.xlsx` 
+  - A data frame is returned
+
+**Note:**
 `read`  - **Extract** data
 `write` - **Modify**  data
+
+# Converting a Data Frame to Excel Workbook
 
 ```{r}
 getwd()
@@ -39,4 +46,12 @@ cars # Workbook object
 my_wbook <- write.xlsx(iris, "23bmat019.xlsx")
 my_wbook
 ```
+
+# (Reading Files into R) Converting an Excel Workbook to a Data Frame 
+
+```{r}
+my_df <- read.xlsx("cars.xlsx")
+my_df
+```
+
 
