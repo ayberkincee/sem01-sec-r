@@ -41,6 +41,11 @@ library(openxlsx)
     a. `dget`()
     b. `dput`()
 
+6. `apply`(`data`, `margin`, `fun`)
+    
+    - `margin` = 1 (row) or 2 (column)
+    - `fun`: any function
+
 **NOTE**:
 
 - `is`.`<class>`(`data`)
@@ -144,5 +149,65 @@ write.csv(iris, "my_df_csv.csv")
 # write.table() has " " as default separator
 write.table(iris, "my_df_table.txt", sep=",")
 write.table(iris, "my_df_table.csv", sep=",")
+```
+
+# Writing Lists into the Disk (Homework)
+
+# Summary Statistics
+
+## For Vector Objects (previously done)
+
+## For Matrix Objects
+
+```{r}
+# R treats matrices like vectors
+
+a1 = round(runif(9, 2, 89))
+m1 <- matrix(a1, 3, 3,
+             dimnames = list(
+               c("Jan", "Feb", "Mar"),
+               c("Day1", "Day2", "Day3")
+             ))
+m1
+length(m1)
+dim(m1)
+nrow(m1)
+ncol(m1)
+
+sum(m1) # sum of all matrix entries
+rowSums(m1) # sums of each row
+colSums(m1) # sums of each column
+
+mean(m1) # mean of all matrix entries
+rowMeans(m1) # means of each row
+colMeans(m1) # means of each column
+
+var(m1) # variance of all matrix entries
+# there is no rowVar and colVar command,
+# instead apply() command may be used
+# it can also be used for sums and means
+```
+
+### `apply()` command
+```{r}
+m2 = matrix(round(runif(9, 1, 99)),
+            3, 3,
+            dimnames = list(
+              month.name[1:3],
+              c("Day1", "Day2", "Day3")
+            ))
+m2
+
+# the following pairs of lines are equivalent
+apply(m2, 1, sum)
+rowSums(m2)
+
+apply(m2, 2, mean)
+colMeans(m2)
+
+# this will help us to map other functions on matrix dimensions
+apply(m2, 1, sd) # sd of each row
+apply(m2, 2, var) # variance of each column
+apply(m2, 2, length) # length of each column
 ```
 
