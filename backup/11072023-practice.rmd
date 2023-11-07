@@ -19,17 +19,41 @@ library(openxlsx)
 
 1. `write`.`xlsx`(`dataframe`, "`filename.xlsx`")
   
-  - Writes the `dataframe` to a file named `filename.xlsx`.
-  - A Workbook object is returned
-  - Please note that this function is only for .xlsx files
+    - Writes the `dataframe` to a file named `filename.xlsx`.
+    - A Workbook object is returned
+    - Please note that this function is only for .xlsx files
 
 2. `read`.`xlsx`("`filename.xlsx`")
 
-  - Reads `filename.xlsx` 
-  - A data frame is returned
+    - Reads `filename.xlsx` 
+    - A data frame is returned
 
-**Note:**
+3. For Vectors
+    a. `write`(`data`, `file`=`filename.ext`, `ncolumns`=if(is.character(`data`)) 1 else 5, `sep`=" ")
+    
+    b. `cat`(`data`, `file`=`filename.txt`, `sep`=" ")
+
+4. For 2-D Data Structures
+    a. `write`.`csv`(`data`, `file`="`filename.txt`")
+    b. `write`.`table`(`data`, `file`="`filename.txt`")
+
+5. For Lists (explore)
+    a. `dget`()
+    b. `dput`()
+
+**NOTE**:
+
+- `is`.`<class>`(`data`)
+
+    - Checks if the `data` is of the class `<class>`.
+    - E.g. `is.numeric(data)` checks if data is numeric
+
+- `as`.`class`(`data`)
+
+    Converts the class of `data` to `<class>`
+
 `read`  - **Extract** data
+
 `write` - **Modify**  data
 
 # Converting a Data Frame to Excel Workbook
@@ -55,7 +79,70 @@ my_wbook
 
 ```{r}
 my_df <- read.xlsx("cars.xlsx")
-my_df
+head(my_df)
 ```
 
+
+# Reading and Writing `.csv` files
+
+```{r}
+# Writing `iris` to `my_iris.csv`
+my_iris <- write.csv(iris, "my_iris.csv")
+my_iris # NULL
+
+# Reading `my_iris.csv`
+my_df2 <- read.csv("my_iris.csv")
+head(my_df2)
+```
+
+# Writing Vectors into the Disk
+
+```{r}
+x <- c("a", "b", "c") # character data
+write(x, file="my_vectx.txt")
+write(x, file="my_vectx.csv") # doesn't require packages
+
+y <- letters # character data
+write(y, file="my_vecty.txt") # 1 element per row
+
+z <- 1:35 # numeric data; more than 5 elements
+write(z, file="my_vectz.txt") # 5 elements per row
+
+write(z, file="my_vectz.csv", sep=",")
+# without sep="," 5 elements are clubbed within a cell separated by spaces
+
+# *(refer to syntax; ncolumns)
+# if the class of data is character, the number of columns will be 1
+# else 5 for any other class
+
+p <- c(3, 5, 8, 9, 5, 2)
+cat(p, file="my_vectp_cat.txt") # all elements in a single row
+cat(p, file="my_vectp_cat.csv", sep=",")
+write(p, file="my_vectp_write.txt")
+```
+
+
+# Writing Matrices and Data Frames into the Disk
+
+```{r}
+### Matrices
+a <- matrix(1:9, 3)
+
+# column names will be generated
+# write.csv() has "," as default separator
+write.csv(a, "my_matrix_csv.txt")
+write.csv(a, "my_matrix_csv.csv")
+
+# write.table() has " " as default separator
+write.table(a, "my_matrix_table.txt", sep=",")
+write.table(a, "my_matrix_table.csv", sep=",")
+
+### Data Frames
+write.csv(iris, "my_df_csv.txt")
+write.csv(iris, "my_df_csv.csv")
+
+# write.table() has " " as default separator
+write.table(iris, "my_df_table.txt", sep=",")
+write.table(iris, "my_df_table.csv", sep=",")
+```
 
