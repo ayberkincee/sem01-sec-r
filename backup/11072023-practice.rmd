@@ -2,7 +2,11 @@
 title: "Practice"
 author: "You"
 date: "2023-11-07"
-output: html_document
+output: 
+  html_document: 
+    toc: yes
+    highlight: kate
+    theme: spacelab
 ---
 
 ```{r}
