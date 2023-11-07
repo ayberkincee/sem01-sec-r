@@ -40,6 +40,8 @@ library(openxlsx)
 5. For Lists (explore)
     a. `dget`()
     b. `dput`()
+    c. `lapply`(`data`, `fun`)
+    d. `sapply`(`data`, `fun`)
 
 6. `apply`(`data`, `margin`, `fun`)
     
@@ -209,5 +211,77 @@ colMeans(m2)
 apply(m2, 1, sd) # sd of each row
 apply(m2, 2, var) # variance of each column
 apply(m2, 2, length) # length of each column
+```
+
+## For Data Frames (explore)
+
+## For Lists
+
+`lapply`() and `sapply`() will be used
+
+```{r}
+l1 = list(
+  1:3,
+  letters[1:5],
+  c(3, 0, 6, -2, 2)
+)
+l1
+
+lapply(l1, max) # output in list
+sapply(l1, max) # output in vector
+```
+
+
+# Class Exercises
+
+Q.1 Create a \(3 \times 3\) matrix and - 
+```{r}
+# initialise matrix for questions
+my_matrix <- matrix(round(runif(9, 1, 99)),
+                    3, 3,
+                    dimnames = list(
+                      LETTERS[1:3],
+                      c("Week1", "Week2", "Week3")
+                    ))
+my_matrix
+```
+
+a. Find the variance of first and third column
+
+```{r}
+# Approaches (2):
+# 1. Extract first and third columns and calculate variance.
+var(my_matrix[,1])
+var(my_matrix[,3])
+
+# 2. Calculate variance for all columns and extract the first and third.
+colVars = apply(my_matrix, 2, var)
+colVars[1]
+colVars[3]
+```
+
+
+b. Find the maximum of second and third row
+```{r}
+rowMax = apply(my_matrix, 1, max)
+rowMax[1]
+rowMax[3]
+```
+
+c. Find the median of first and second column
+```{r}
+colMedians = apply(my_matrix, 2, median)
+colMedians[1]
+colMedians[2]
+```
+
+Q.2 Get the first 10 rows of `mtcars`
+```{r}
+my_df <- head(mtcars, 10)
+```
+
+a. Find the median of each column
+```{r}
+apply(my_df, 2, median)
 ```
 
