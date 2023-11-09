@@ -1,5 +1,5 @@
 # sec-stats-with-r
-Files for SEC: Statistics with R
+Notes for Semester-I Skill Enhancement Course (Mathematics): Statistics with 'R'
 
 <hr>
 
