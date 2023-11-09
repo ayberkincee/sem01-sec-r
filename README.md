@@ -1,5 +1,5 @@
-# sec-stats-with-r
-Notes for Semester-I Skill Enhancement Course (Mathematics): Statistics with 'R'
+# sem01-sec-r
+Notes for **Semester-I Skill Enhancement Course** (Mathematics): *Statistics with 'R'*
 
 <hr>
 
