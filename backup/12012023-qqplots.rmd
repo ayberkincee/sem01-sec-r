@@ -62,3 +62,11 @@ qqline(cyl, col = "maroon")
 detach(mtcars)
 ```
 
+# Class Questions
+```{r}
+urn <- runif(100, 1, 2)
+nrn <- rnorm(100, 5, 1)
+qqp <- qqplot(urn, nrn)
+qqp
+abline(lm(qqp$y ~ qqp$x))
+```
